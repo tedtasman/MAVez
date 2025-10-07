@@ -1,0 +1,1081 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Missions" href="missions.html"><link rel="prev" title="PSU UAS MAVez" href="index.html">
+
+    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+        <title>Controllers - MAVez documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">MAVez  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">MAVez  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="missions.html">Missions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="coordinate.html">Coordinate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/controller.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="controllers">
+<h1>Controllers<a class="headerlink" href="#controllers" title="Link to this heading">¶</a></h1>
+<section id="module-MAVez.controller">
+<span id="basic-controller"></span><h2>Basic Controller<a class="headerlink" href="#module-MAVez.controller" title="Link to this heading">¶</a></h2>
+<p>This module is responsible for controlling ardupilot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.controller.Controller">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MAVez.controller.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp:127.0.0.1:5762'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">57600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mavlink'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller class for atomic MAVLink communication with ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection_string</strong> (<em>str</em>) – The connection string for ardupilot. Default is “<a class="reference external" href="tcp:127.0.0.1:5762">tcp:127.0.0.1:5762</a>” used for SITL.</p></li>
+<li><p><strong>baud</strong> (<em>int</em>) – The baud rate for the connection. Default is 57600.</p></li>
+<li><p><strong>logger</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – Logger instance for logging messages (optional).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ConnectionError</strong> – If the connection to ardupilot fails.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.BAD_RESPONSE_ERROR">
+<span class="sig-name descname"><span class="pre">BAD_RESPONSE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></em><a class="headerlink" href="#MAVez.controller.Controller.BAD_RESPONSE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.TIMEOUT_DURATION">
+<span class="sig-name descname"><span class="pre">TIMEOUT_DURATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#MAVez.controller.Controller.TIMEOUT_DURATION" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.TIMEOUT_ERROR">
+<span class="sig-name descname"><span class="pre">TIMEOUT_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></em><a class="headerlink" href="#MAVez.controller.Controller.TIMEOUT_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.UNKNOWN_MODE">
+<span class="sig-name descname"><span class="pre">UNKNOWN_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></em><a class="headerlink" href="#MAVez.controller.Controller.UNKNOWN_MODE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.arm">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.arm" title="Link to this definition">¶</a></dt>
+<dd><p>Arm ardupilot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – If True, ardupilot will be armed regardless of its state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if ardupilot was armed successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.decode_error">
+<span class="sig-name descname"><span class="pre">decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.decode_error" title="Link to this definition">¶</a></dt>
+<dd><p>Decode the error code into a human-readable string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<em>int</em>) – The error code to decode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A human-readable error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disable_geofence">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disable_geofence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">floor_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disable_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Disable the geofence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>floor_only</strong> (<em>bool</em>) – If True, only the floor of the geofence will be disabled.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the geofence was disabled successfully, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disable_message_interval">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disable_message_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disable_message_interval" title="Link to this definition">¶</a></dt>
+<dd><p>Disable the message interval for the specified message type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<em>str</em>) – The type of message to disable the interval for.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message interval was disabled successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disarm">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">disarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disarm" title="Link to this definition">¶</a></dt>
+<dd><p>Disarm ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – If True, ardupilot will be disarmed regardless of its state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if ardupilot was disarmed successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.enable_geofence">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enable_geofence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.enable_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Enable the geofence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the geofence was enabled successfully, 101 if the response timed out.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.message_pump">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">message_pump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.message_pump" title="Link to this definition">¶</a></dt>
+<dd><p>Continuously read MAVLink messages and push them into a queue.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_attitude">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_attitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_attitude" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for an attitude message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if an attitude message was received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_channel_input">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_channel_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_channel_input" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for an RC_CHANNELS message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if an RC_CHANNELS message was received, 101 if the response timed out</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_current_mission_index">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_current_mission_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_current_mission_index" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current mission index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current mission index if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_gps">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_gps</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_gps" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a gps_raw_int message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Coordinate object containing the GPS data if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate">Coordinate</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_landing_status">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_landing_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_landing_status" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a landed_state message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The landing state if received, TIMEOUT_ERROR (101) if the response timed out, 0 if the state is undefined, 1 if on ground, 2 if in air, 3 if taking off, 4 if landing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_message">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_message" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a specific MAVLink message type from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<em>str</em>) – The type of MAVLink message to wait for.</p></li>
+<li><p><strong>timeout</strong> (<em>float</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The received MAVLink message if successful, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_ack">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_mission_ack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_ack" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission ack from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>float</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if a mission ack was received, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_item_reached">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_mission_item_reached</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_item_reached" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission item reached message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sequence number of the reached mission item if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_request">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_mission_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_request" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission request from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>float</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mission index if a mission request was received, 101 if the response timed out, 102 if a bad response was received.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_wind">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receive_wind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_wind" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a wind_cov message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if a wind_cov message was received, 101 if the response timed out</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_clear_mission">
+<span class="sig-name descname"><span class="pre">send_clear_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_clear_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Clear the mission on ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the mission was cleared successfully</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_message">
+<span class="sig-name descname"><span class="pre">send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_message" title="Link to this definition">¶</a></dt>
+<dd><p>Send a MAVLink message to ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – The MAVLink message to send.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_mission_count">
+<span class="sig-name descname"><span class="pre">send_mission_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mission_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_mission_count" title="Link to this definition">¶</a></dt>
+<dd><p>Send the mission count to ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count</strong> (<em>int</em>) – The number of mission items.</p></li>
+<li><p><strong>mission_type</strong> (<em>int</em>) – The type of mission (default is 0 for MISSION_TYPE 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission count was sent successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_current_mission_index">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_current_mission_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_current_mission_index" title="Link to this definition">¶</a></dt>
+<dd><p>sets the target mission index to the specified index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – The index to set as the current mission index.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the current mission index was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_home">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">home_coordinate=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_home" title="Link to this definition">¶</a></dt>
+<dd><p>Set the home location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>home_coordinate</strong> (<a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><em>Coordinate</em></a>) – The home coordinate to set. If the coordinate is (0, 0, 0), the current GPS location will be used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the home location was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_message_interval">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_message_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_message_interval" title="Link to this definition">¶</a></dt>
+<dd><p>Set the message interval for the specified message type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<em>int</em>) – The type of message to set the interval for.</p></li>
+<li><p><strong>interval</strong> (<em>int</em>) – The interval in microseconds to set for the message type.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message interval was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_mode">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_mode" title="Link to this definition">¶</a></dt>
+<dd><p>Set the ardupilot mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>str</em>) – The mode to set ardupilot to. Options include: “AUTO”, “GUIDED”, “FBWA”, etc…</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mode was set successfully, 111 if the mode is unknown, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_servo">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_servo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">servo_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_servo" title="Link to this definition">¶</a></dt>
+<dd><p>Set the a servo to a specified PWM value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>servo_number</strong> (<em>int</em>) – The servo number to set.</p></li>
+<li><p><strong>pwm</strong> (<em>int</em>) – The PWM value to set the servo to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the servo was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.start">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.start" title="Link to this definition">¶</a></dt>
+<dd><p>Start the controller by initiating the message pump.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.start_mission">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.start_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Start the mission at the specified index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_index</strong> (<em>int</em>) – The index to start the mission from.</p></li>
+<li><p><strong>end_index</strong> (<em>int</em>) – The index to end the mission at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was started successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.stop">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.stop" title="Link to this definition">¶</a></dt>
+<dd><p>Stop the controller by cancelling the message pump.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-MAVez.flight_controller">
+<span id="flight-controller"></span><h2>Flight Controller<a class="headerlink" href="#module-MAVez.flight_controller" title="Link to this heading">¶</a></h2>
+<p>This module is responsible for managing the flight of ardupilot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MAVez.flight_controller.</span></span><span class="sig-name descname"><span class="pre">FlightController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp:127.0.0.1:5762'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">57600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">craft_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'plane'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mavlink'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MAVez.controller.Controller" title="MAVez.controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a></p>
+<p>Manages the flight plan for ardupilot. Extends the Controller class to provide complex flight functionalities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection_string</strong> (<em>str</em>) – The connection string to ardupilot.</p></li>
+<li><p><strong>baud</strong> (<em>int</em>) – The baud rate for the connection. Default is 57600.</p></li>
+<li><p><strong>logger</strong> (<em>Logger</em><em> | </em><em>None</em>) – Optional logger for logging flight events.</p></li>
+<li><p><strong>craft_type</strong> (<em>str</em>) – The type of craft (“plane” or “copter”). Default is “plane”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ConnectionError</strong> – If the connection to ardupilot fails.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of the Flight_Controller class.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flight_Controller</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR">
+<span class="sig-name descname"><span class="pre">BAD_RESPONSE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></em><a class="headerlink" href="#MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR">
+<span class="sig-name descname"><span class="pre">INVALID_MISSION_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">301</span></em><a class="headerlink" href="#MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.Literal">
+<span class="sig-name descname"><span class="pre">Literal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">typing.Literal</span></em><a class="headerlink" href="#MAVez.flight_controller.FlightController.Literal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.TIMEOUT_ERROR">
+<span class="sig-name descname"><span class="pre">TIMEOUT_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></em><a class="headerlink" href="#MAVez.flight_controller.FlightController.TIMEOUT_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR">
+<span class="sig-name descname"><span class="pre">UNKNOWN_MODE_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></em><a class="headerlink" href="#MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.append_mission">
+<span class="sig-name descname"><span class="pre">append_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.append_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Append a mission to the mission list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The file containing the mission to append.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was appended successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.auto_send_next_mission">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">auto_send_next_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.auto_send_next_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Waits for the last waypoint to be reached, clears the mission, sends the next mission, sets mode to auto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the next mission was sent successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.decode_error">
+<span class="sig-name descname"><span class="pre">decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.decode_error" title="Link to this definition">¶</a></dt>
+<dd><p>Decode an error code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<em>int</em>) – The error code to decode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string describing the error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.jump_to_next_mission_item">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jump_to_next_mission_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.jump_to_next_mission_item" title="Link to this definition">¶</a></dt>
+<dd><p>Jump to the next mission item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the jump was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.set_geofence">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_geofence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geofence_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.set_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Send and enable the geofence from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geofence_filename</strong> (<em>str</em>) – The file containing the geofence mission.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the geofence was set successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.takeoff">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">takeoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">takeoff_mission_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.takeoff" title="Link to this definition">¶</a></dt>
+<dd><p>Takeoff ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>takeoff_mission_filename</strong> (<em>str</em>) – The file containing the takeoff mission.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the takeoff was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_channel_input">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for_channel_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_channel_input" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a specified rc channel to reach a given value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>int</em>) – The channel number to wait for.</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – The value to wait for.</p></li>
+<li><p><strong>wait_time</strong> (<em>int</em>) – The maximum time to wait for the channel to be set in seconds.</p></li>
+<li><p><strong>value_tolerance</strong> (<em>int</em>) – The tolerance range for the set value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the channel was set to the desired value, otherwise an error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_landing">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for_landing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_landing" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for ardupilot to signal landed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The maximum time to wait for the landing status in seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the landing was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_waypoint">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wait_for_waypoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_waypoint" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for ardupilot to reach the current waypoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<em>int</em>) – The target waypoint index to wait for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the waypoint was reached successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="missions.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Missions</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, The Pennsylvania State University Unmanned Aerial Systems Club
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Controllers</a><ul>
+<li><a class="reference internal" href="#module-MAVez.controller">Basic Controller</a><ul>
+<li><a class="reference internal" href="#MAVez.controller.Controller"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.controller.Controller.BAD_RESPONSE_ERROR"><code class="docutils literal notranslate"><span class="pre">Controller.BAD_RESPONSE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.TIMEOUT_DURATION"><code class="docutils literal notranslate"><span class="pre">Controller.TIMEOUT_DURATION</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.TIMEOUT_ERROR"><code class="docutils literal notranslate"><span class="pre">Controller.TIMEOUT_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.UNKNOWN_MODE"><code class="docutils literal notranslate"><span class="pre">Controller.UNKNOWN_MODE</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.arm"><code class="docutils literal notranslate"><span class="pre">Controller.arm()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.decode_error"><code class="docutils literal notranslate"><span class="pre">Controller.decode_error()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disable_geofence"><code class="docutils literal notranslate"><span class="pre">Controller.disable_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disable_message_interval"><code class="docutils literal notranslate"><span class="pre">Controller.disable_message_interval()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disarm"><code class="docutils literal notranslate"><span class="pre">Controller.disarm()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.enable_geofence"><code class="docutils literal notranslate"><span class="pre">Controller.enable_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.message_pump"><code class="docutils literal notranslate"><span class="pre">Controller.message_pump()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_attitude"><code class="docutils literal notranslate"><span class="pre">Controller.receive_attitude()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_channel_input"><code class="docutils literal notranslate"><span class="pre">Controller.receive_channel_input()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_current_mission_index"><code class="docutils literal notranslate"><span class="pre">Controller.receive_current_mission_index()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_gps"><code class="docutils literal notranslate"><span class="pre">Controller.receive_gps()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_landing_status"><code class="docutils literal notranslate"><span class="pre">Controller.receive_landing_status()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_message"><code class="docutils literal notranslate"><span class="pre">Controller.receive_message()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_ack"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_ack()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_item_reached"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_item_reached()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_request"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_request()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_wind"><code class="docutils literal notranslate"><span class="pre">Controller.receive_wind()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_clear_mission"><code class="docutils literal notranslate"><span class="pre">Controller.send_clear_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_message"><code class="docutils literal notranslate"><span class="pre">Controller.send_message()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_mission_count"><code class="docutils literal notranslate"><span class="pre">Controller.send_mission_count()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_current_mission_index"><code class="docutils literal notranslate"><span class="pre">Controller.set_current_mission_index()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_home"><code class="docutils literal notranslate"><span class="pre">Controller.set_home()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_message_interval"><code class="docutils literal notranslate"><span class="pre">Controller.set_message_interval()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_mode"><code class="docutils literal notranslate"><span class="pre">Controller.set_mode()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_servo"><code class="docutils literal notranslate"><span class="pre">Controller.set_servo()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.start"><code class="docutils literal notranslate"><span class="pre">Controller.start()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.start_mission"><code class="docutils literal notranslate"><span class="pre">Controller.start_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.stop"><code class="docutils literal notranslate"><span class="pre">Controller.stop()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-MAVez.flight_controller">Flight Controller</a><ul>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController"><code class="docutils literal notranslate"><span class="pre">FlightController</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.BAD_RESPONSE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.INVALID_MISSION_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.Literal"><code class="docutils literal notranslate"><span class="pre">FlightController.Literal</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.TIMEOUT_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.TIMEOUT_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.UNKNOWN_MODE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.append_mission"><code class="docutils literal notranslate"><span class="pre">FlightController.append_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.auto_send_next_mission"><code class="docutils literal notranslate"><span class="pre">FlightController.auto_send_next_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.decode_error"><code class="docutils literal notranslate"><span class="pre">FlightController.decode_error()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.jump_to_next_mission_item"><code class="docutils literal notranslate"><span class="pre">FlightController.jump_to_next_mission_item()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.set_geofence"><code class="docutils literal notranslate"><span class="pre">FlightController.set_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.takeoff"><code class="docutils literal notranslate"><span class="pre">FlightController.takeoff()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_channel_input"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_channel_input()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_landing"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_landing()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_waypoint"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_waypoint()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
