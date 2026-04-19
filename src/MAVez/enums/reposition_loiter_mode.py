@@ -1,9 +1,11 @@
 from enum import Enum
 
-class RepositionLoiterMode(Enum):
-    """Enum for MAVLink reposition loiter modes.
+class RepositionYawMode(Enum):
+    """Enum for MAVLink reposition yaw modes.
     """
-    USE_YAW = -1
     CLOCKWISE = 0
     COUNTER_CLOCKWISE = 1
+    USE_YAW = 2
+    NONE = 3
+
 

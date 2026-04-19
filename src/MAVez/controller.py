@@ -27,7 +27,7 @@ from MAVez.enums.mav_landed_state import MAVLandedState
 from MAVez.enums.mav_mission_result import MAVMissionResult
 from MAVez.enums.mav_result import MAVResult
 from MAVez.enums.mav_message import MAVMessage
-from MAVez.enums.reposition_loiter_mode import RepositionLoiterMode
+from MAVez.enums.reposition_loiter_mode import RepositionYawMode
 
 
 class Controller:
@@ -80,11 +80,9 @@ class Controller:
 
         self.logger = SafeLogger(logger)
 
-        self.msg_queue = asyncio.Queue()
-
         self.master: mavutil.mavfile = mavutil.mavlink_connection(connection_string, baud=baud)  # type: ignore
 
-        response = self.master.wait_heartbeat(  # type: ignore
+        response = self.master.wait_heartbeat(
             blocking=True, timeout=self.TIMEOUT_DURATION
         ) 
         # check if the connection was successful
@@ -93,12 +91,12 @@ class Controller:
             raise ConnectionError("Connection failed")
         self.logger.info(f"[Controller] Connection successful. Heartbeat from system (system {self.master.target_system} component {self.master.target_component})")  # type: ignore
 
+        self.msg_queue = asyncio.Queue()
         self.pub = Publisher(host=message_host, port=message_port, outbound_queue=self.msg_queue)
         self.message_topic = message_topic
-        self.message_host = message_host
-        self.message_port = message_port
         self.logger.info(f"[Controller] Publisher initialized at {message_host}:{message_port}")
-
+        
+        # message variables
         self.__running = asyncio.Event()
         self.__message_pump_task = None
         self.__clock_sync_task = None
@@ -108,9 +106,9 @@ class Controller:
 
         # clock sync variables
         self.timesync = timesync
-        self.rtt = None
+        self.rtt_ns = None
         self.start_time = time.monotonic_ns()
-        self.offset = None
+        self.offset_ns = None
         self.last_sync_time = 0
         self.ROLLING_WINDOW = 50
         self.CLOCK_SYNC_INTERVAL = 3  # seconds
@@ -808,13 +806,13 @@ class Controller:
             self.logger.debug(f"[Controller] Received GPS data: {message['lat']}, {message['lon']}, {message['alt']}, {message['hdg']}")
             if message is not None:
 
-                if normalize_time and 'time_boot_ms' in message and self.offset is not None:
+                if normalize_time and 'time_boot_ms' in message and self.offset_ns is not None:
                     # normalize the timestamp using the offset
-                    normalized_timestamp = message['time_boot_ms'] * 1e6 - self.offset
+                    normalized_timestamp = message['time_boot_ms'] * 1e6 - self.offset_ns
 
                 else:
                     normalized_timestamp = message['time_boot_ms'] * 1e6  # convert to nanoseconds
-            
+                self.logger.debug(f"[Controller] GPS Timestamp (system): {message["time_boot_ms"]}")
                 return Coordinate.from_int(
                     latitude_degE7=message['lat'],
                     longitude_degE7=message['lon'],
@@ -1100,12 +1098,12 @@ class Controller:
         rtt_samples = []
         offset_samples = []
         while i < NUM_SAMPLES:
-            ts1 = time.monotonic_ns()
+            ts1 = self.monotonic_time_ns()
             next_seq = self.__message_seq_by_type["TIMESYNC"] + 1
             self.request_timesync(ts1)
 
             response = await self.receive_timesync(next_seq)
-            ts4 = time.monotonic_ns()
+            ts4 = self.monotonic_time_ns()
 
             if isinstance(response, int):
                 self.logger.error("[Controller] Failed to sync clocks.")
@@ -1136,23 +1134,23 @@ class Controller:
 
         rtt = sum(rtt_samples) / len(rtt_samples)
         offset = sum(offset_samples) / len(offset_samples)
-        self.rtt = rtt
-        if self.offset:
-            self.offset = (1 - ALPHA) * self.offset + ALPHA * offset
+        self.rtt_ns = rtt
+        if self.offset_ns:
+            self.offset_ns = (1 - ALPHA) * self.offset_ns + ALPHA * offset
         else: 
-            self.offset = offset
+            self.offset_ns = offset
 
         timesync_update = Message(
             topic=f"{self.message_topic}_timesync_update" if self.message_topic else "timesync_update", 
             header={
-                "offset": self.offset,
-                "rtt": self.rtt,
+                "offset": self.offset_ns,
+                "rtt": self.rtt_ns,
             }
         )
         await self.msg_queue.put(timesync_update)
 
         self.last_sync_time = time.time()
-        self.logger.debug(f"[Controller] Clocks synced successfully. RTT: {self.rtt}, Offset: {self.offset}")
+        self.logger.debug(f"[Controller] Clocks synced successfully. RTT: {self.rtt_ns}, Offset: {self.offset_ns}")
         return 0
     
     async def clock_synchronizer(self):
@@ -1164,15 +1162,33 @@ class Controller:
             await asyncio.sleep(self.CLOCK_SYNC_INTERVAL)
 
     def monotonic_time_ns(self) -> int:
-        """
-        Get the current monotonic time in nanoseconds since the controller started.
+        """Get the current monotonic time in nanoseconds since the controller started.
 
         Returns:
             int: The current monotonic time in nanoseconds since the controller started.
         """
         return time.monotonic_ns() - self.start_time
     
+    def time_boot_ms(self) -> int:
+        """Get the estimated system time of the connected vehicle since boot. Uses calculated timesync offset.
+
+        Returns:
+            int: The approximate time since boot for the connected vehicle. If a timesync offset has not been calculated, returns -1.
+        """
+        if self.offset_ns is None:
+            return -1
+        
+        return int((self.monotonic_time_ns() + self.offset_ns) / 1e6)
+    
     def get_message_seq(self, message_type: str) -> int:
+        """Get the latest sequence number for a given message type
+
+        Args:
+            message_type (str): Message type name
+
+        Returns:
+            int: The latest sequence number
+        """
         return self.__message_seq_by_type[message_type]
     
     async def send_reposition(
@@ -1180,7 +1196,7 @@ class Controller:
             position: Coordinate, 
             radius_m: float = 0, 
             speed_mps: float = -1,
-            loiter_mode: RepositionLoiterMode = RepositionLoiterMode.USE_YAW,
+            yaw_mode: RepositionYawMode = RepositionYawMode.NONE,
             change_mode: bool = False,
             relative_yaw: bool = True
     ) -> int:
@@ -1190,7 +1206,7 @@ class Controller:
             position (Coordinate): The destination coordinate.
             radius_m (float, optional): Loiter radius in meters. If omitted or 0, default is used.
             speed_mps (float, optional): Speed to travel at in m/s. If omitted or -1, default is used.
-            loiter_mode (RepositionLoiterMode, optional): Mode for reposition loiter direction for planes. Defaults to USE_YAW for VTOL craft.
+            yaw_mode (RepositionYawMode, optional): Mode for reposition loiter direction for planes. Defaults to USE_YAW for VTOL craft.
             change_mode (bool, optional): Flag to automatically change mode to guided upon message send. Defaults to False.
             relative_yaw (bool, optional): Flag to set yYaw relative to the vehicle current heading. If false, yaw relative to North. Defaults to True.
         """
@@ -1200,6 +1216,13 @@ class Controller:
             (1 if change_mode else 0)
             | (2 if relative_yaw else 0)
         )
+
+        if yaw_mode == RepositionYawMode.NONE:
+            param4 = float('nan')
+        elif yaw_mode == RepositionYawMode.USE_YAW:
+            param4 = position.heading_rad
+        else:
+            param4 = yaw_mode.value
 
         message = self.master.mav.command_int_encode(
             0,  # target_system
@@ -1211,7 +1234,7 @@ class Controller:
             speed_mps,  # param1
             flags,  # param2
             radius_m,  # param3
-            position.heading_rad if loiter_mode == RepositionLoiterMode.USE_YAW else loiter_mode.value,  # param4            
+            param4,  # param4            
             position.latitude_degE7,  # x
             position.longitude_degE7,  # y
             position.altitude_m,  # z
@@ -1234,10 +1257,20 @@ class Controller:
 
     async def send_takeoff(
         self, 
-        pitch_deg: float, 
         altitude_m: float,
+        pitch_deg: float = 0, 
         require_horizontal_position: bool = True
-    ):
+    ) -> int:
+        """Send a takeoff message
+
+        Args:
+            altitude_m (float): Altitude to ascend to
+            pitch_deg (float, optional): Pitch to ascend at (planes only). Minimum pitch if airspeed sensor present, else desired pitch.
+            require_horizontal_position (bool, optional): Require autopilot to have control over its horizontal position. Defaults to True.
+
+        Returns:
+            int: 0 for success, error code on failure
+        """
         
         message = self.master.mav.command_long_encode( # type: ignore
             0,  # target_system
@@ -1267,9 +1300,9 @@ class Controller:
         else:
             self.logger.error(f"[Controller] Failed to takeoff: {MAVResult.string(res)}")
             return res
-        
+    
 
-    def release_rc(self, channel: int):
+    def release_rc(self, channel: int) -> int:
         """Disable RC override for a channel
 
         Args:
@@ -1280,7 +1313,7 @@ class Controller:
         """
         return self.override_rc(channel, 0)
 
-    def override_rc(self, channel: int, pwm: int):
+    def override_rc(self, channel: int, pwm: int) -> int:
         """Manually set RC PWM value for a specific channel, overriding RC receiver input
 
         Args:
@@ -1319,3 +1352,38 @@ class Controller:
         else:
             self.logger.info(f"[Controller] Set RC channel {channel} to PWM {pwm} microseconds") 
         return 0
+    
+    async def run_prearm_checks(self) -> int:
+        """Run prearm checks at request.
+
+        Returns:
+            int: 0 on success, error code on failure.
+        """
+        message = self.master.mav.command_long_encode( # type: ignore
+            0,  # target_system
+            0,  # target_component
+            mavutil.mavlink.MAV_CMD_RUN_PREARM_CHECKS,  # command
+            0,  # confirmation
+            0,  # param1
+            0,  # param2
+            0,  # param3
+            0,  # param4
+            0,  # param5
+            0,  # param6
+            0,  # param7
+        )
+
+        res = await self.send_command_with_ack(message, mavutil.mavlink.MAV_CMD_RUN_PREARM_CHECKS, self.TIMEOUT_DURATION)
+
+        if res == self.TIMEOUT_ERROR:
+            self.logger.error("[Controller] Run prearm checks command timed out")
+            return self.TIMEOUT_ERROR
+        elif res == self.BAD_RESPONSE_ERROR:
+            self.logger.error("[Controller] Bad response received for run prearm checks")
+            return self.BAD_RESPONSE_ERROR
+        elif res == 0:
+            self.logger.info("[Controller] Prearm checks started")
+            return 0
+        else:
+            self.logger.error(f"[Controller] Prearm checks failed to run: {MAVResult.string(res)}")
+            return res

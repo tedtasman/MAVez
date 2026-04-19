@@ -10,16 +10,17 @@ An ardupilot mission.
 """
 
 from pathlib import Path
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from lingo import Message
 
 from MAVez.mission_item import MissionItem
 from MAVez.coordinate import Coordinate
-from MAVez.controller import Controller
 
 import logging
 import time
 
+if TYPE_CHECKING:
+    from MAVez.controller import Controller
 
 class Mission:
     """
@@ -40,7 +41,7 @@ class Mission:
     # time to wait for mission to be sent
     MISSION_SEND_TIMEOUT = 20  # seconds
 
-    def __init__(self, controller: Controller, type: int=0):
+    def __init__(self, controller: "Controller", type: int=0):
         self.controller = controller
         self.type = type
         self.mission_items: list[MissionItem] = []
@@ -77,7 +78,7 @@ class Mission:
         return error_codes.get(error_code, f"\nUNKNOWN ERROR ({error_code})\n")
 
     @classmethod
-    def from_file(cls, controller: Controller, filepath: Path, type: int=0) -> Optional['Mission']:
+    def from_file(cls, controller: "Controller", filepath: Path, type: int=0) -> Optional['Mission']:
         """Create a Mission object directly from a QGC WPL 110 file.    
 
         Returns:

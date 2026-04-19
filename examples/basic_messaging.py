@@ -27,7 +27,7 @@ async def main():
 
         await controller.arm()
 
-        await controller.auto_takeoff("./examples/sample_missions/sample1.txt")
+        await controller.auto_mission_takeoff("./examples/sample_missions/sample1.txt")
         controller.append_mission("./examples/sample_missions/sample2.txt")
         controller.append_mission("./examples/sample_missions/sample3.txt")
 
