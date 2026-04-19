@@ -153,7 +153,10 @@ class Coordinate:
 
         return Coordinate(
             latitude_deg=geo["lat2"],
-            longitude_deg=geo["lon2"]
+            longitude_deg=geo["lon2"],
+            altitude_m=self.altitude_m,
+            heading_deg=self.heading_deg,
+            timestamp_ms=self.timestamp_ms
         )
 
     def __eq__(self, other: "Coordinate | object") -> bool:

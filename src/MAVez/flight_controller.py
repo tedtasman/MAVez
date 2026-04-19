@@ -498,7 +498,7 @@ class FlightController(Controller):
             require_horizontal_position: bool = True,
             critical = False
     ) -> int: 
-        """Takeoff at current position and wait for altitude reached
+        """Set mode to guided, arm, and takeoff at current position and wait for altitude reached
 
         Args:
             altitude_m (float): Altitude to ascend to
@@ -511,6 +511,14 @@ class FlightController(Controller):
         Returns:
             int: 0 on success else error code
         """
+        res = await self.set_mode("GUIDED")
+        if res:
+            self.logger.critical("[Flight] Takeoff failed")
+            await self.__failsafe() if critical else None
+            return res
+        
+        res = await self.arm()
+
         res = await self.send_takeoff(altitude_m, pitch_deg, require_horizontal_position)
         if res:
             self.logger.critical("[Flight] Takeoff failed")
