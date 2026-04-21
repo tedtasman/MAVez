@@ -5,6 +5,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   publish:
     name: Publish to PyPI
@@ -14,8 +18,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,8 +26,8 @@ jobs:
 
       - name: Install build tools
         run: |
-          pip install --upgrade pip
-          pip install build twine
+          python -m pip install --upgrade pip
+          python -m pip install build
 
       - name: Clean old builds
         run: rm -rf dist/
@@ -33,11 +35,7 @@ jobs:
       - name: Build the package
         run: python -m build
 
-      - name: List dist files
-        run: ls -l dist/
-
-      - name: Publish to PyPi
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: python -m twine upload dist/*
+      - name: Publish to PyPI (Trusted Publishing)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
