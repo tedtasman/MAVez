@@ -1198,7 +1198,7 @@ class Controller:
             speed_mps: float = -1,
             yaw_mode: RepositionYawMode = RepositionYawMode.NONE,
             change_mode: bool = False,
-            relative_yaw: bool = True
+            relative_yaw: bool = False
     ) -> int:
         """Send a guided MAV_DO_REPOSITION message
 
@@ -1208,10 +1208,10 @@ class Controller:
             speed_mps (float, optional): Speed to travel at in m/s. If omitted or -1, default is used.
             yaw_mode (RepositionYawMode, optional): Mode for reposition loiter direction for planes. Defaults to USE_YAW for VTOL craft.
             change_mode (bool, optional): Flag to automatically change mode to guided upon message send. Defaults to False.
-            relative_yaw (bool, optional): Flag to set yYaw relative to the vehicle current heading. If false, yaw relative to North. Defaults to True.
+            relative_yaw (bool, optional): Flag to set Yaw relative to the vehicle current heading. If false, yaw relative to North. Defaults to False.
         """
 
-                # bitwise operation for flags bitmask
+        # bitwise operation for flags bitmask
         flags = (
             (1 if change_mode else 0)
             | (2 if relative_yaw else 0)
