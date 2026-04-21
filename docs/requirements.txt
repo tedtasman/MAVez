@@ -4,6 +4,5 @@ sphinx-autodoc-typehints
 pymavlink>=2.4.0
 pyparsing
 colorlog
-datetime
-asyncio
 psuuas-lingo>=1.5.0
+geographiclib>=2.1
