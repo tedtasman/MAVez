@@ -5,10 +5,10 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Utils" href="utils.html"><link rel="prev" title="Missions" href="missions.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Coordinate - MAVez documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -172,7 +172,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -196,6 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="missions.html">Missions</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Coordinate</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
 </ul>
 
 </div>
@@ -229,107 +230,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-MAVez.coordinate">
-<span id="coordinate"></span><h1>Coordinate<a class="headerlink" href="#module-MAVez.coordinate" title="Link to this heading">¶</a></h1>
-<p>Represents a geographic coordinate with latitude, longitude, and altitude.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MAVez.coordinate.</span></span><span class="sig-name descname"><span class="pre">Coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>This class represents a coordinate in latitude, longitude, and altitude. It provides methods to initialize the coordinate, convert between degrees and decimal degrees, and offset the coordinate by a given distance and heading.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lat</strong> (<em>float</em><em> | </em><em>str</em>) – Latitude in decimal degrees or DMS format if <cite>dms</cite> is True.</p></li>
-<li><p><strong>lon</strong> (<em>float</em><em> | </em><em>str</em>) – Longitude in decimal degrees or DMS format if <cite>dms</cite> is True.</p></li>
-<li><p><strong>alt</strong> (<em>float</em>) – Altitude in meters.</p></li>
-<li><p><strong>dms</strong> (<em>bool</em>) – If True, the coordinates are in degrees, minutes, seconds format. Defaults to False.</p></li>
-<li><p><strong>use_int</strong> (<em>bool</em>) – If True, the coordinates are stored as integers. Defaults to True.</p></li>
-<li><p><strong>heading</strong> (<em>float</em><em> | </em><em>None</em>) – Heading in degrees. Defaults to None.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the Coordinate class.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate">Coordinate</a></p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.bearing_to">
-<span class="sig-name descname"><span class="pre">bearing_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.bearing_to" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the bearing between two coordinates in degrees.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><em>Coordinate</em></a>) – The other coordinate to calculate the bearing to.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The bearing in degrees from self to other.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.distance_to">
-<span class="sig-name descname"><span class="pre">distance_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.distance_to" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the distance between two coordinates in meters using the haversine formula.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><em>Coordinate</em></a>) – The other coordinate to calculate the distance to.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The distance in meters between the two coordinates.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.normalize">
-<span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.normalize" title="Link to this definition">¶</a></dt>
-<dd><p>Normalize the coordinates to decimal degrees.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing the latitude and longitude in decimal degrees.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.offset_coordinate">
-<span class="sig-name descname"><span class="pre">offset_coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.offset_coordinate" title="Link to this definition">¶</a></dt>
-<dd><p>Offset the coordinate by a given distance and heading.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>offset</strong> (<em>float</em>) – The distance to offset in meters.</p></li>
-<li><p><strong>heading</strong> (<em>float</em>) – The heading in degrees.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A new Coordinate object with the offset applied.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate">Coordinate</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+          <section id="coordinate">
+<h1>Coordinate<a class="headerlink" href="#coordinate" title="Link to this heading">¶</a></h1>
 </section>
 
         </article>
@@ -375,40 +282,15 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Coordinate</a><ul>
-<li><a class="reference internal" href="#MAVez.coordinate.Coordinate"><code class="docutils literal notranslate"><span class="pre">Coordinate</span></code></a><ul>
-<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.bearing_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.bearing_to()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.distance_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.distance_to()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.normalize"><code class="docutils literal notranslate"><span class="pre">Coordinate.normalize()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.offset_coordinate"><code class="docutils literal notranslate"><span class="pre">Coordinate.offset_coordinate()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     </body>
 </html>

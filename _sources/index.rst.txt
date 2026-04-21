@@ -24,4 +24,5 @@ The **"Standard Messages/Commands" → "common.xml"** section is a particularly 
    missions
    coordinate
    utils
+   enums
 

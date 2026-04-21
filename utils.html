@@ -3,12 +3,12 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Coordinate" href="coordinate.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Enums" href="enums.html"><link rel="prev" title="Coordinate" href="coordinate.html">
 
-    <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Utils - MAVez documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
     
     
@@ -196,6 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="missions.html">Missions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="coordinate.html">Coordinate</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="enums.html">Enums</a></li>
 </ul>
 
 </div>
@@ -236,163 +237,11 @@
         <article role="main" id="furo-main-content">
           <section id="utils">
 <h1>Utils<a class="headerlink" href="#utils" title="Link to this heading">¶</a></h1>
-<section id="module-MAVez.enums">
-<span id="enums"></span><h2>Enums<a class="headerlink" href="#module-MAVez.enums" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="MAVez.enums.get_mav_landed_state_string">
-<span class="sig-prename descclassname"><span class="pre">MAVez.enums.</span></span><span class="sig-name descname"><span class="pre">get_mav_landed_state_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.enums.get_mav_landed_state_string" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="MAVez.enums.get_mav_mission_result_string">
-<span class="sig-prename descclassname"><span class="pre">MAVez.enums.</span></span><span class="sig-name descname"><span class="pre">get_mav_mission_result_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.enums.get_mav_mission_result_string" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="MAVez.enums.get_mav_result_string">
-<span class="sig-prename descclassname"><span class="pre">MAVez.enums.</span></span><span class="sig-name descname"><span class="pre">get_mav_result_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.enums.get_mav_result_string" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="safe-logger">
+<h2>Safe Logger<a class="headerlink" href="#safe-logger" title="Link to this heading">¶</a></h2>
 </section>
-<section id="module-MAVez.zmq_broker">
-<span id="zmq-broker"></span><h2>ZMQ Broker<a class="headerlink" href="#module-MAVez.zmq_broker" title="Link to this heading">¶</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="MAVez.zmq_broker.ZMQBroker">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MAVez.zmq_broker.</span></span><span class="sig-name descname"><span class="pre">ZMQBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'localhost'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5555</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.zmq_broker.ZMQBroker" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A ZeroMQ broker for publishing messages.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>host</strong> (<em>str</em>) – The hostname to bind the ZeroMQ socket. Default is “localhost”.</p></li>
-<li><p><strong>port</strong> (<em>int</em>) – The port number to bind the ZeroMQ socket. Default is 5555.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.zmq_broker.ZMQBroker.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.zmq_broker.ZMQBroker.close" title="Link to this definition">¶</a></dt>
-<dd><p>Close the ZeroMQ socket and terminate the context.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.zmq_broker.ZMQBroker.publish">
-<span class="sig-name descname"><span class="pre">publish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">topic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.zmq_broker.ZMQBroker.publish" title="Link to this definition">¶</a></dt>
-<dd><p>Publish a message to a specified topic. The topic will be combined with the message type.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>topic</strong> (<em>str</em>) – The topic to publish the message to.</p></li>
-<li><p><strong>message</strong> (<em>Any</em>) – The MAVLink message to publish.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-MAVez.safe_logger">
-<span id="safe-logger"></span><h2>Safe Logger<a class="headerlink" href="#module-MAVez.safe_logger" title="Link to this heading">¶</a></h2>
-<p>A safe logger that only logs if the logger is properly initialized.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">MAVez.safe_logger.</span></span><span class="sig-name descname"><span class="pre">SafeLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A safe logger that only logs if the logger is properly initialized.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>logger</strong> (<em>logging.Logger</em><em> | </em><em>None</em>) – The logger instance to use. If None, logging is disabled.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of the Safe_Logger class.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Safe_Logger</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger.critical">
-<span class="sig-name descname"><span class="pre">critical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger.critical" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger.debug">
-<span class="sig-name descname"><span class="pre">debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger.debug" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger.error">
-<span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger.error" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger.info">
-<span class="sig-name descname"><span class="pre">info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger.info" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="MAVez.safe_logger.SafeLogger.warning">
-<span class="sig-name descname"><span class="pre">warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.SafeLogger.warning" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="MAVez.safe_logger.configure_logging">
-<span class="sig-prename descclassname"><span class="pre">MAVez.safe_logger.</span></span><span class="sig-name descname"><span class="pre">configure_logging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.safe_logger.configure_logging" title="Link to this definition">¶</a></dt>
-<dd><p>Configure logging to log messages to both a file and the console with colors.</p>
-</dd></dl>
-
-</section>
-<section id="module-MAVez.translate_message">
-<span id="translate-message"></span><h2>Translate Message<a class="headerlink" href="#module-MAVez.translate_message" title="Link to this heading">¶</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="MAVez.translate_message.translate_message">
-<span class="sig-prename descclassname"><span class="pre">MAVez.translate_message.</span></span><span class="sig-name descname"><span class="pre">translate_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.translate_message.translate_message" title="Link to this definition">¶</a></dt>
-<dd><p>Convert a CSVMessage object to Python dictionary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>csvm</strong> (<em>CSVMessage</em>) – The CSVMessage object to convert.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A dictionary representation of the CSVMessage.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict</p>
-</dd>
-</dl>
-</dd></dl>
-
+<section id="translate-message">
+<h2>Translate Message<a class="headerlink" href="#translate-message" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -401,7 +250,15 @@
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="enums.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Enums</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="coordinate.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
@@ -444,36 +301,8 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Utils</a><ul>
-<li><a class="reference internal" href="#module-MAVez.enums">Enums</a><ul>
-<li><a class="reference internal" href="#MAVez.enums.get_mav_landed_state_string"><code class="docutils literal notranslate"><span class="pre">get_mav_landed_state_string()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.enums.get_mav_mission_result_string"><code class="docutils literal notranslate"><span class="pre">get_mav_mission_result_string()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.enums.get_mav_result_string"><code class="docutils literal notranslate"><span class="pre">get_mav_result_string()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-MAVez.zmq_broker">ZMQ Broker</a><ul>
-<li><a class="reference internal" href="#MAVez.zmq_broker.ZMQBroker"><code class="docutils literal notranslate"><span class="pre">ZMQBroker</span></code></a><ul>
-<li><a class="reference internal" href="#MAVez.zmq_broker.ZMQBroker.close"><code class="docutils literal notranslate"><span class="pre">ZMQBroker.close()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.zmq_broker.ZMQBroker.publish"><code class="docutils literal notranslate"><span class="pre">ZMQBroker.publish()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-MAVez.safe_logger">Safe Logger</a><ul>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger"><code class="docutils literal notranslate"><span class="pre">SafeLogger</span></code></a><ul>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger.critical"><code class="docutils literal notranslate"><span class="pre">SafeLogger.critical()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger.debug"><code class="docutils literal notranslate"><span class="pre">SafeLogger.debug()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger.error"><code class="docutils literal notranslate"><span class="pre">SafeLogger.error()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger.info"><code class="docutils literal notranslate"><span class="pre">SafeLogger.info()</span></code></a></li>
-<li><a class="reference internal" href="#MAVez.safe_logger.SafeLogger.warning"><code class="docutils literal notranslate"><span class="pre">SafeLogger.warning()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#MAVez.safe_logger.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-MAVez.translate_message">Translate Message</a><ul>
-<li><a class="reference internal" href="#MAVez.translate_message.translate_message"><code class="docutils literal notranslate"><span class="pre">translate_message()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#safe-logger">Safe Logger</a></li>
+<li><a class="reference internal" href="#translate-message">Translate Message</a></li>
 </ul>
 </li>
 </ul>
@@ -486,8 +315,8 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/scripts/furo.js?v=46bd48cc"></script>
     </body>
 </html>
