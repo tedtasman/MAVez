@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Utils" href="utils.html"><link rel="prev" title="Missions" href="missions.html">
 
-    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Coordinate - MAVez documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -172,7 +172,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -230,13 +230,197 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="coordinate">
-<h1>Coordinate<a class="headerlink" href="#coordinate" title="Link to this heading">¶</a></h1>
+          <section id="module-MAVez.coordinate">
+<span id="coordinate"></span><h1>Coordinate<a class="headerlink" href="#module-MAVez.coordinate" title="Link to this heading">¶</a></h1>
+<p>Represents a geographic coordinate with latitude, longitude, and altitude.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.coordinate.</span></span><span class="sig-name descname"><span class="pre">Coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude_deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude_deg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading_deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.altitude_mm">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">altitude_mm</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.altitude_mm" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.azimuth_to">
+<span class="sig-name descname"><span class="pre">azimuth_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.azimuth_to" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the azimuth to another coordinate clockwise from north</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The other coordinate to calculate the azimuth to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The azimuth relative to north in degrees</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.bearing_to">
+<span class="sig-name descname"><span class="pre">bearing_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.bearing_to" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the bearing to another coordinate clockwise from <cite>self.heading_deg</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The other coordinate to calculate the bearing to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The bearing relative to heading in degrees</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.distance_to">
+<span class="sig-name descname"><span class="pre">distance_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_alt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.distance_to" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the distance between two coordinates in meters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The other coordinate to calculate the distance to.</p></li>
+<li><p><strong>include_alt</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Flag to consider difference in altitude in distance. Defaults to false.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The distance in meters between the two coordinates.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.from_int">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude_degE7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude_degE7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude_mm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading_cdeg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.from_int" title="Link to this definition">¶</a></dt>
+<dd><p>Create a coordinate object from using integer representation of position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latitude_degE7</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Latitude of position in degrees * 10^7.</p></li>
+<li><p><strong>longitude_degE7</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Longitude of position in degrees * 10^7.</p></li>
+<li><p><strong>altitude_mm</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Altitude of position in millimeters. Defaults to 0.</p></li>
+<li><p><strong>heading_cdeg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Heading of position in centidegrees clockwise from north. Defaults to 0.</p></li>
+<li><p><strong>timestamp_ms</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Timestamp for the position in milliseconds. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created Coordinate object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate">Coordinate</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.from_rad">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heading_rad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.from_rad" title="Link to this definition">¶</a></dt>
+<dd><p>Create a coordinate object from using radian representation of position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>latitude_rad</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Latitude of position in radians.</p></li>
+<li><p><strong>longitude_rad</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Longitude of position in radians.</p></li>
+<li><p><strong>altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Altitude of position in meters. Defaults to 0.</p></li>
+<li><p><strong>heading_rad</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Heading of position in radians clockwise from north. Defaults to 0.</p></li>
+<li><p><strong>timestamp_ms</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Timestamp for the position in milliseconds. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created Coordinate object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate">Coordinate</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.heading_cdeg">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">heading_cdeg</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.heading_cdeg" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.heading_rad">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">heading_rad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.heading_rad" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.latitude_degE7">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">latitude_degE7</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.latitude_degE7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.latitude_rad">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">latitude_rad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.latitude_rad" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.longitude_degE7">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">longitude_degE7</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.longitude_degE7" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.longitude_rad">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">longitude_rad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><a class="headerlink" href="#MAVez.coordinate.Coordinate.longitude_rad" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.offset_coordinate">
+<span class="sig-name descname"><span class="pre">offset_coordinate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distance_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth_deg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.offset_coordinate" title="Link to this definition">¶</a></dt>
+<dd><p>Offset the coordinate by a given distance and heading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>distance_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The distance to offset in meters.</p></li>
+<li><p><strong>azimuth_deg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The bearing from the first coordinate in degrees.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new Coordinate object with the offset applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.coordinate.Coordinate.path_to">
+<span class="sig-name descname"><span class="pre">path_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.Coordinate.path_to" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the azimuth, bearing, and distance between two coordinates in degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The other coordinate to calculate the path to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dict with keys for calculated “distance” in meters, “azimuth” in degrees, and “bearing” in degrees</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MAVez.coordinate.main">
+<span class="sig-prename descclassname"><span class="pre">MAVez.coordinate.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.coordinate.main" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 
         </article>
@@ -282,8 +466,44 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Coordinate</a><ul>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate"><code class="docutils literal notranslate"><span class="pre">Coordinate</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.altitude_mm"><code class="docutils literal notranslate"><span class="pre">Coordinate.altitude_mm</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.azimuth_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.azimuth_to()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.bearing_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.bearing_to()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.distance_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.distance_to()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.from_int"><code class="docutils literal notranslate"><span class="pre">Coordinate.from_int()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.from_rad"><code class="docutils literal notranslate"><span class="pre">Coordinate.from_rad()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.heading_cdeg"><code class="docutils literal notranslate"><span class="pre">Coordinate.heading_cdeg</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.heading_rad"><code class="docutils literal notranslate"><span class="pre">Coordinate.heading_rad</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.latitude_degE7"><code class="docutils literal notranslate"><span class="pre">Coordinate.latitude_degE7</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.latitude_rad"><code class="docutils literal notranslate"><span class="pre">Coordinate.latitude_rad</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.longitude_degE7"><code class="docutils literal notranslate"><span class="pre">Coordinate.longitude_degE7</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.longitude_rad"><code class="docutils literal notranslate"><span class="pre">Coordinate.longitude_rad</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.offset_coordinate"><code class="docutils literal notranslate"><span class="pre">Coordinate.offset_coordinate()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.coordinate.Coordinate.path_to"><code class="docutils literal notranslate"><span class="pre">Coordinate.path_to()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#MAVez.coordinate.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

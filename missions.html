@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Coordinate" href="coordinate.html"><link rel="prev" title="Controllers" href="controller.html">
 
-    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Missions - MAVez documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -237,11 +237,248 @@
         <article role="main" id="furo-main-content">
           <section id="missions">
 <h1>Missions<a class="headerlink" href="#missions" title="Link to this heading">¶</a></h1>
-<section id="mission">
-<h2>Mission<a class="headerlink" href="#mission" title="Link to this heading">¶</a></h2>
+<section id="module-MAVez.mission">
+<span id="mission"></span><h2>Mission<a class="headerlink" href="#module-MAVez.mission" title="Link to this heading">¶</a></h2>
+<p>An ardupilot mission.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.mission.Mission">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.mission.</span></span><span class="sig-name descname"><span class="pre">Mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a mission for ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>controller</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="controller.html#MAVez.controller.Controller" title="MAVez.controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a></span>) – The controller instance to send the mission through.</p></li>
+<li><p><strong>type</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The type of the mission, default is 0 (waypoint mission).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the Mission class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MAVez.mission.Mission" title="MAVez.mission.Mission">Mission</a></p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.MISSION_SEND_TIMEOUT">
+<span class="sig-name descname"><span class="pre">MISSION_SEND_TIMEOUT</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></span><a class="headerlink" href="#MAVez.mission.Mission.MISSION_SEND_TIMEOUT" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.TIMEOUT_ERROR">
+<span class="sig-name descname"><span class="pre">TIMEOUT_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></span><a class="headerlink" href="#MAVez.mission.Mission.TIMEOUT_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.add_mission_item">
+<span class="sig-name descname"><span class="pre">add_mission_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mission_item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.add_mission_item" title="Link to this definition">¶</a></dt>
+<dd><p>Add a mission item to the mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mission_item</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#MAVez.mission_item.MissionItem" title="MAVez.mission_item.MissionItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">MissionItem</span></code></a></span>) – The mission item to add.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission item was added successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.clear_mission">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clear_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.clear_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Clear the mission from the vehicle.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the mission was cleared successfully, or an error code if there was an error.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.decode_error">
+<span class="sig-name descname"><span class="pre">decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.decode_error" title="Link to this definition">¶</a></dt>
+<dd><p>Decode an error code into a human-readable string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The error code to decode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A human-readable string describing the error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.from_file">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">controller</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.from_file" title="Link to this definition">¶</a></dt>
+<dd><p>Create a Mission object directly from a QGC WPL 110 file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The created mission object or None if file loading failed</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#MAVez.mission.Mission" title="MAVez.mission.Mission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mission</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.load_mission_from_file">
+<span class="sig-name descname"><span class="pre">load_mission_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.load_mission_from_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load a QGC WPL 110 mission from a file. For details on the file format, see: <a class="reference external" href="https://mavlink.io/en/file_formats/">https://mavlink.io/en/file_formats/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – The path to the file containing the mission.</p></li>
+<li><p><strong>start</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The line number to start loading from, default is 0.</p></li>
+<li><p><strong>end</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The line number to stop loading at, default is -1 (load to the end).</p></li>
+<li><p><strong>first_seq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The sequence number to start from, default is -1 (use the sequence number from the file).</p></li>
+<li><p><strong>overwrite</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to overwrite the existing mission items, default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was loaded successfully, or an error code if there was an error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.save_mission_to_file">
+<span class="sig-name descname"><span class="pre">save_mission_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.save_mission_to_file" title="Link to this definition">¶</a></dt>
+<dd><p>Save the mission to a file in QGC WPL 110 format. For details on the file format, see: <a class="reference external" href="https://mavlink.io/en/file_formats/">https://mavlink.io/en/file_formats/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The path to the file to save the mission to.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was saved successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.mission.Mission.send_mission">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">send_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.Mission.send_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Send the mission to ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reset</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to reset the mission index to 0 after sending the mission, default is True.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was sent successfully, or an error code if there was an error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MAVez.mission.get_mission_length">
+<span class="sig-prename descclassname"><span class="pre">MAVez.mission.</span></span><span class="sig-name descname"><span class="pre">get_mission_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.get_mission_length" title="Link to this definition">¶</a></dt>
+<dd><p>Utility function to get the number of mission items in a mission file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Path to mission file</p></li>
+<li><p><strong>logger</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – logging. Defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of items in the mission, or -1 if file was not found</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="MAVez.mission.is_mission_completed">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.mission.</span></span><span class="sig-name descname"><span class="pre">is_mission_completed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mission_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission.is_mission_completed" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for the mission to complete by monitoring the current mission index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Message</span></code></span>) – The UAS Messenger message containing the mission item reached</p></li>
+<li><p><strong>mission_length</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Total number of mission items.</p></li>
+<li><p><strong>logger</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – logging. Defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if mission is completed, false otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mission-item">
-<h2>Mission Item<a class="headerlink" href="#mission-item" title="Link to this heading">¶</a></h2>
+<section id="module-MAVez.mission_item">
+<span id="mission-item"></span><h2>Mission Item<a class="headerlink" href="#module-MAVez.mission_item" title="Link to this heading">¶</a></h2>
+<p>An ardupilot mission item.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.mission_item.MissionItem">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.mission_item.</span></span><span class="sig-name descname"><span class="pre">MissionItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_continue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coordinate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param4</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.mission_item.MissionItem" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a mission item for ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Sequence number of the mission item.</p></li>
+<li><p><strong>frame</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Frame of reference for the mission item.</p></li>
+<li><p><strong>command</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Command to be executed.</p></li>
+<li><p><strong>current</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Whether this is the current mission item.</p></li>
+<li><p><strong>auto_continue</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Whether to automatically continue to the next item.</p></li>
+<li><p><strong>coordinate</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The coordinate for the mission item.</p></li>
+<li><p><strong>type</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Type of the mission item, default is 0.</p></li>
+<li><p><strong>param1</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Parameter 1 for the command, default is 0.</p></li>
+<li><p><strong>param2</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Parameter 2 for the command, default is 0.</p></li>
+<li><p><strong>param3</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Parameter 3 for the command, default is 0.</p></li>
+<li><p><strong>param4</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Parameter 4 for the command, default is 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the Mission_Item class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mission_Item</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="MAVez.mission_item.MissionItem.message">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#MAVez.mission_item.MissionItem.message" title="Link to this definition">¶</a></dt>
+<dd><p>The MAVLink message for the mission item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The MAVLink message for the mission item.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>mavutil.mavlink.MAVLink_mission_item_int_message</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -301,8 +538,30 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Missions</a><ul>
-<li><a class="reference internal" href="#mission">Mission</a></li>
-<li><a class="reference internal" href="#mission-item">Mission Item</a></li>
+<li><a class="reference internal" href="#module-MAVez.mission">Mission</a><ul>
+<li><a class="reference internal" href="#MAVez.mission.Mission"><code class="docutils literal notranslate"><span class="pre">Mission</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.mission.Mission.MISSION_SEND_TIMEOUT"><code class="docutils literal notranslate"><span class="pre">Mission.MISSION_SEND_TIMEOUT</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.TIMEOUT_ERROR"><code class="docutils literal notranslate"><span class="pre">Mission.TIMEOUT_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.add_mission_item"><code class="docutils literal notranslate"><span class="pre">Mission.add_mission_item()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.clear_mission"><code class="docutils literal notranslate"><span class="pre">Mission.clear_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.decode_error"><code class="docutils literal notranslate"><span class="pre">Mission.decode_error()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.from_file"><code class="docutils literal notranslate"><span class="pre">Mission.from_file()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.load_mission_from_file"><code class="docutils literal notranslate"><span class="pre">Mission.load_mission_from_file()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.save_mission_to_file"><code class="docutils literal notranslate"><span class="pre">Mission.save_mission_to_file()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.Mission.send_mission"><code class="docutils literal notranslate"><span class="pre">Mission.send_mission()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#MAVez.mission.get_mission_length"><code class="docutils literal notranslate"><span class="pre">get_mission_length()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.mission.is_mission_completed"><code class="docutils literal notranslate"><span class="pre">is_mission_completed()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-MAVez.mission_item">Mission Item</a><ul>
+<li><a class="reference internal" href="#MAVez.mission_item.MissionItem"><code class="docutils literal notranslate"><span class="pre">MissionItem</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.mission_item.MissionItem.message"><code class="docutils literal notranslate"><span class="pre">MissionItem.message</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

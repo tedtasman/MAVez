@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Missions" href="missions.html"><link rel="prev" title="PSU UAS MAVez" href="index.html">
 
-    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
         <title>Controllers - MAVez documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
@@ -237,11 +237,1117 @@
         <article role="main" id="furo-main-content">
           <section id="controllers">
 <h1>Controllers<a class="headerlink" href="#controllers" title="Link to this heading">¶</a></h1>
-<section id="basic-controller">
-<h2>Basic Controller<a class="headerlink" href="#basic-controller" title="Link to this heading">¶</a></h2>
+<section id="module-MAVez.controller">
+<span id="basic-controller"></span><h2>Basic Controller<a class="headerlink" href="#module-MAVez.controller" title="Link to this heading">¶</a></h2>
+<p>This module is responsible for controlling ardupilot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.controller.Controller">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.controller.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp:127.0.0.1:5762'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">57600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5555</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timesync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Controller class for atomic MAVLink communication with ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection_string</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The connection string for ardupilot. Default is “<a class="reference external" href="tcp:127.0.0.1:5762">tcp:127.0.0.1:5762</a>” used for SITL.</p></li>
+<li><p><strong>baud</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The baud rate for the connection. Default is 57600.</p></li>
+<li><p><strong>logger</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – Logger instance for logging messages (optional).</p></li>
+<li><p><strong>message_host</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The host for the messaging system. Default is “127.0.0.1”.</p></li>
+<li><p><strong>message_port</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The port for the messaging system. Default is 5555.</p></li>
+<li><p><strong>message_topic</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The topic prefix for the messaging system. Default is “”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ConnectionError</strong> – If the connection to ardupilot fails.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.BAD_RESPONSE_ERROR">
+<span class="sig-name descname"><span class="pre">BAD_RESPONSE_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></span><a class="headerlink" href="#MAVez.controller.Controller.BAD_RESPONSE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.TIMEOUT_DURATION">
+<span class="sig-name descname"><span class="pre">TIMEOUT_DURATION</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></span><a class="headerlink" href="#MAVez.controller.Controller.TIMEOUT_DURATION" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.TIMEOUT_ERROR">
+<span class="sig-name descname"><span class="pre">TIMEOUT_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></span><a class="headerlink" href="#MAVez.controller.Controller.TIMEOUT_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.UNKNOWN_MODE">
+<span class="sig-name descname"><span class="pre">UNKNOWN_MODE</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></span><a class="headerlink" href="#MAVez.controller.Controller.UNKNOWN_MODE" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.arm">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">arm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.arm" title="Link to this definition">¶</a></dt>
+<dd><p>Arm ardupilot</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – If True, ardupilot will be armed regardless of its state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if ardupilot was armed successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.clock_synchronizer">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">clock_synchronizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.clock_synchronizer" title="Link to this definition">¶</a></dt>
+<dd><p>Periodically sync the flight controller clock with the system clock.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.decode_error">
+<span class="sig-name descname"><span class="pre">decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.decode_error" title="Link to this definition">¶</a></dt>
+<dd><p>Decode the error code into a human-readable string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The error code to decode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A human-readable error message.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disable_geofence">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">disable_geofence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">floor_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disable_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Disable the geofence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>floor_only</strong> (<em>bool</em>) – If True, only the floor of the geofence will be disabled.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the geofence was disabled successfully, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disable_message_interval">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">disable_message_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disable_message_interval" title="Link to this definition">¶</a></dt>
+<dd><p>Disable the message interval for the specified message type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="enums.html#MAVez.enums.mav_message.MAVMessage" title="MAVez.enums.mav_message.MAVMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MAVMessage</span></code></a></span>) – The type of message to disable the interval for.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message interval was disabled successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.disarm">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">disarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.disarm" title="Link to this definition">¶</a></dt>
+<dd><p>Disarm ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>force</strong> (<em>bool</em>) – If True, ardupilot will be disarmed regardless of its state.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if ardupilot was disarmed successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.enable_geofence">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">enable_geofence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.enable_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Enable the geofence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the geofence was enabled successfully, 101 if the response timed out.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.get_message_seq">
+<span class="sig-name descname"><span class="pre">get_message_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.get_message_seq" title="Link to this definition">¶</a></dt>
+<dd><p>Get the latest sequence number for a given message type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message_type</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – Message type name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The latest sequence number</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.message_pump">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">message_pump</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.message_pump" title="Link to this definition">¶</a></dt>
+<dd><p>Continuously read MAVLink messages and push them into a queue.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.monotonic_time_ns">
+<span class="sig-name descname"><span class="pre">monotonic_time_ns</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.monotonic_time_ns" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current monotonic time in nanoseconds since the controller started.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current monotonic time in nanoseconds since the controller started.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.override_rc">
+<span class="sig-name descname"><span class="pre">override_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.override_rc" title="Link to this definition">¶</a></dt>
+<dd><p>Manually set RC PWM value for a specific channel, overriding RC receiver input</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Channel number 1-8 to set. Values outside [1,8] will be rejected</p></li>
+<li><p><strong>pwm</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – PWM value to set from 1000 (low) to 2000 (high) microseconds. A value of 0 will release control of the RC channel back to the receiver. Nonzero values outside [1000,2000] will be rejected.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message is sent, BAD_RESPONSE_ERROR for invalid input</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_attitude">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_attitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_attitude" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for an attitude message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if an attitude message was received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_channel_input">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_channel_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_channel_input" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for an RC_CHANNELS message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if an RC_CHANNELS message was received, 101 if the response timed out</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_current_mission_index">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_current_mission_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_current_mission_index" title="Link to this definition">¶</a></dt>
+<dd><p>Get the current mission index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current mission index if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_gps">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_gps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_gps" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a GLOBAL_POSITION_INT message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+<li><p><strong>normalize_time</strong> (<em>bool</em>) – If True, the timestamp will be normalized to the controller’s clock. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Coordinate object containing the GPS data if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_landing_status">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_landing_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_landing_status" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a landed_state message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The landing state if received, TIMEOUT_ERROR (101) if the response timed out, 0 if the state is undefined, 1 if on ground, 2 if in air, 3 if taking off, 4 if landing.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_message">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">Controller.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_message" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a specific MAVLink message type from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="enums.html#MAVez.enums.mav_message.MAVMessage" title="MAVez.enums.mav_message.MAVMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MAVMessage</span></code></a></span>) – The type of MAVLink message to wait for.</p></li>
+<li><p><strong>seq</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The minimum sequence of the message type desired. If omitted, waits for the next new message</p></li>
+<li><p><strong>qualifier</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]</span>) – Additional requirement for message to be returned. By default the first matching message is returned.</p></li>
+<li><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary representation of MAVLink message if successful, None if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_ack">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_mission_ack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_ack" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission ack from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if a mission ack was received, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_item_reached">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_mission_item_reached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">240</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_item_reached" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission item reached message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The timeout duration in seconds. Default is 240 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sequence number of the reached mission item if received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_mission_request">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_mission_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_mission_request" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a mission request from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mission index if a mission request was received, 101 if the response timed out, 102 if a bad response was received.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_timesync">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_timesync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_timesync" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a timesync message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if a timesync message was received, TIMEOUT_ERROR (101) if the response timed out.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.receive_wind">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">receive_wind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">normalize_direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.receive_wind" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a WIND message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+<li><p><strong>normalize_direction</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code> | <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>response if a WIND message was received, 101 if the response timed out</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.release_rc">
+<span class="sig-name descname"><span class="pre">release_rc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.release_rc" title="Link to this definition">¶</a></dt>
+<dd><p>Disable RC override for a channel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>channel</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Channel number 1-8 to set. Values outside [1,8] will be rejected</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message is sent, BAD_RESPONSE_ERROR for invalid input</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.request_message">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">request_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualifier</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">Controller.&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.request_message" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.request_timesync">
+<span class="sig-name descname"><span class="pre">request_timesync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.request_timesync" title="Link to this definition">¶</a></dt>
+<dd><p>Request a timesync message from ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>current_time</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The current time in nanoseconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the timesync request was sent successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.run_prearm_checks">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">run_prearm_checks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.run_prearm_checks" title="Link to this definition">¶</a></dt>
+<dd><p>Run prearm checks at request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 on success, error code on failure.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_clear_mission">
+<span class="sig-name descname"><span class="pre">send_clear_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_clear_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Clear the mission on ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the mission was cleared successfully</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_command_with_ack">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">send_command_with_ack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">command_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_command_with_ack" title="Link to this definition">¶</a></dt>
+<dd><p>Send a MAVLink command message and wait for the corresponding COMMAND_ACK</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> (<em>MAVLink message</em>) – MAVLink message to be sent</p></li>
+<li><p><strong>command_id</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Integer ID representation of the MAVLink command</p></li>
+<li><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Time to wait for ack</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>COMMAND_ACK result if received, TIMEOUT_ERROR if timeout, or BAD_RESPONSE_ERROR if non-COMMAND_ACK received</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_message">
+<span class="sig-name descname"><span class="pre">send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_message" title="Link to this definition">¶</a></dt>
+<dd><p>Send a MAVLink message to ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – The MAVLink message to send.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_mission_count">
+<span class="sig-name descname"><span class="pre">send_mission_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mission_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_mission_count" title="Link to this definition">¶</a></dt>
+<dd><p>Send the mission count to ardupilot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count</strong> (<em>int</em>) – The number of mission items.</p></li>
+<li><p><strong>mission_type</strong> (<em>int</em>) – The type of mission (default is 0 for MISSION_TYPE 0).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission count was sent successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_reposition">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">send_reposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_mps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaw_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">RepositionYawMode.NONE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">change_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_yaw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_reposition" title="Link to this definition">¶</a></dt>
+<dd><p>Send a guided MAV_DO_REPOSITION message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – The destination coordinate.</p></li>
+<li><p><strong>radius_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Loiter radius in meters. If omitted or 0, default is used.</p></li>
+<li><p><strong>speed_mps</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Speed to travel at in m/s. If omitted or -1, default is used.</p></li>
+<li><p><strong>yaw_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RepositionYawMode</span></code></span>) – Mode for reposition loiter direction for planes. Defaults to USE_YAW for VTOL craft.</p></li>
+<li><p><strong>change_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Flag to automatically change mode to guided upon message send. Defaults to False.</p></li>
+<li><p><strong>relative_yaw</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Flag to set Yaw relative to the vehicle current heading. If false, yaw relative to North. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.send_takeoff">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">send_takeoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch_deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_horizontal_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.send_takeoff" title="Link to this definition">¶</a></dt>
+<dd><p>Send a takeoff message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Altitude to ascend to</p></li>
+<li><p><strong>pitch_deg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Pitch to ascend at (planes only). Minimum pitch if airspeed sensor present, else desired pitch.</p></li>
+<li><p><strong>require_horizontal_position</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Require autopilot to have control over its horizontal position. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 for success, error code on failure</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_current_mission_index">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_current_mission_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_current_mission_index" title="Link to this definition">¶</a></dt>
+<dd><p>sets the target mission index to the specified index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The index to set as the current mission index.</p></li>
+<li><p><strong>reset</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Reset the mission, defaults to false</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the current mission index was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_home">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">home_coordinate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0°</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0°;</span> <span class="pre">0m</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_home" title="Link to this definition">¶</a></dt>
+<dd><p>Set the home location.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>home_coordinate</strong> (<a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><em>Coordinate</em></a>) – The home coordinate to set. If omitted or (0, 0, 0), the current GPS location will be used.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the home location was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_message_interval">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_message_interval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval_us</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_message_interval" title="Link to this definition">¶</a></dt>
+<dd><p>Set the message interval for the specified message type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="enums.html#MAVez.enums.mav_message.MAVMessage" title="MAVez.enums.mav_message.MAVMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">MAVMessage</span></code></a></span>) – The type of message to set the interval for.</p></li>
+<li><p><strong>interval_us</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The interval in microseconds to set for the message type.</p></li>
+<li><p><strong>timeout</strong> (<em>int</em>) – The timeout duration in seconds. Default is 5 seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the message interval was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_mode">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_mode" title="Link to this definition">¶</a></dt>
+<dd><p>Set the ardupilot mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The mode to set ardupilot to. Options include: “AUTO”, “GUIDED”, “FBWA”, etc…</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mode was set successfully, 111 if the mode is unknown, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.set_servo">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_servo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">servo_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pwm</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.set_servo" title="Link to this definition">¶</a></dt>
+<dd><p>Set the a servo to a specified PWM value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>servo_number</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The servo number to set.</p></li>
+<li><p><strong>pwm</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The PWM value to set the servo to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the servo was set successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.start">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.start" title="Link to this definition">¶</a></dt>
+<dd><p>Start the controller by initiating the message pump.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.start_mission">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">start_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.start_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Start the mission at the specified index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_index</strong> (<em>int</em>) – The index to start the mission from.</p></li>
+<li><p><strong>end_index</strong> (<em>int</em>) – The index to end the mission at.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was started successfully, error code if there was an error, 101 if the response timed out.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.stop">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.stop" title="Link to this definition">¶</a></dt>
+<dd><p>Stop the controller by cancelling running tasks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.sync_clocks">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">sync_clocks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.sync_clocks" title="Link to this definition">¶</a></dt>
+<dd><p>Sync the flight controller clock with the system clock.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the clocks were synced successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.controller.Controller.time_boot_ms">
+<span class="sig-name descname"><span class="pre">time_boot_ms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.controller.Controller.time_boot_ms" title="Link to this definition">¶</a></dt>
+<dd><p>Get the estimated system time of the connected vehicle since boot. Uses calculated timesync offset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The approximate time since boot for the connected vehicle. If a timesync offset has not been calculated, returns -1.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
-<section id="flight-controller">
-<h2>Flight Controller<a class="headerlink" href="#flight-controller" title="Link to this heading">¶</a></h2>
+<section id="module-MAVez.flight_controller">
+<span id="flight-controller"></span><h2>Flight Controller<a class="headerlink" href="#module-MAVez.flight_controller" title="Link to this heading">¶</a></h2>
+<p>This module is responsible for managing the flight of ardupilot.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">MAVez.flight_controller.</span></span><span class="sig-name descname"><span class="pre">FlightController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_string</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp:127.0.0.1:5762'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">57600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'127.0.0.1'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5555</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_topic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timesync</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">failsafe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#MAVez.controller.Controller" title="MAVez.controller.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a></p>
+<p>Manages the flight plan for ardupilot. Extends the Controller class to provide complex flight functionalities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>connection_string</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The connection string to ardupilot.</p></li>
+<li><p><strong>baud</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The baud rate for the connection. Default is 57600.</p></li>
+<li><p><strong>logger</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code> | <code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></span>) – Optional logger for logging flight events.</p></li>
+<li><p><strong>message_host</strong> (<em>str</em>) – The host for messaging.</p></li>
+<li><p><strong>message_host</strong> – The host for the messaging system. Default is “127.0.0.1”.</p></li>
+<li><p><strong>message_port</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The port for the messaging system. Default is 5555.</p></li>
+<li><p><strong>message_topic</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span>) – The topic prefix for the messaging system. Default is “”.</p></li>
+<li><p><strong>timesync</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Whether to enable time synchronization. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ConnectionError</strong> – If the connection to ardupilot fails.</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An instance of the Flight_Controller class.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flight_Controller</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR">
+<span class="sig-name descname"><span class="pre">BAD_RESPONSE_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">102</span></span><a class="headerlink" href="#MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR">
+<span class="sig-name descname"><span class="pre">INVALID_MISSION_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">301</span></span><a class="headerlink" href="#MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.TIMEOUT_ERROR">
+<span class="sig-name descname"><span class="pre">TIMEOUT_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">101</span></span><a class="headerlink" href="#MAVez.flight_controller.FlightController.TIMEOUT_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR">
+<span class="sig-name descname"><span class="pre">UNKNOWN_MODE_ERROR</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">111</span></span><a class="headerlink" href="#MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.append_mission">
+<span class="sig-name descname"><span class="pre">append_mission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.append_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Append a mission to the mission list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – The file containing the mission to append.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the mission was appended successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.auto_mission_takeoff">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">auto_mission_takeoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">takeoff_mission_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.auto_mission_takeoff" title="Link to this definition">¶</a></dt>
+<dd><p>Takeoff ardupilot using an auto mission.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>takeoff_mission_filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – The file containing the takeoff mission.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the takeoff was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.auto_send_next_mission">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">auto_send_next_mission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.auto_send_next_mission" title="Link to this definition">¶</a></dt>
+<dd><p>Waits for the last waypoint to be reached, clears the mission, sends the next mission, sets mode to auto.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the next mission was sent successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.decode_error">
+<span class="sig-name descname"><span class="pre">decode_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.decode_error" title="Link to this definition">¶</a></dt>
+<dd><p>Decode an error code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The error code to decode.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string describing the error.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.go_to">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">go_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accept_radius_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loiter_radius_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed_mps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loiter_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">RepositionYawMode.USE_YAW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">change_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_yaw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.go_to" title="Link to this definition">¶</a></dt>
+<dd><p>Reposition and wait for arrival</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – Target location</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum wait time for arrival</p></li>
+<li><p><strong>accept_radius_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Tolerance for arrival proximity in meters</p></li>
+<li><p><strong>loiter_radius_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Radius for planes to loiter. Defaults to 0.</p></li>
+<li><p><strong>speed_mps</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Speed to travel at in meters/second. If -1 or not specified, uses system default.</p></li>
+<li><p><strong>loiter_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">RepositionYawMode</span></code></span>) – Loitering behavior option. Defaults to RepositionYawMode.USE_YAW.</p></li>
+<li><p><strong>change_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Flag to change mode to guided. Defaults to False.</p></li>
+<li><p><strong>relative_yaw</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Flag to yaw relative to vehicle heading instead of North. Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 for success, o.w. error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.is_armed">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_armed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.is_armed" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the vehicle is armed. Will attempt to run prearm checks to test</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 for unarmed, 1 for armed, else error code</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.jump_to_next_mission_item">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">jump_to_next_mission_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.jump_to_next_mission_item" title="Link to this definition">¶</a></dt>
+<dd><p>Jump to the next mission item.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 if the jump was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.land">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">land</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abort_altitude_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision_land_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PrecisionLandMode.DISABLED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.land" title="Link to this definition">¶</a></dt>
+<dd><p>Land at a given position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – Position to land at</p></li>
+<li><p><strong>abort_altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Minimum altitude to trigger abort</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum time to wait for successful landing</p></li>
+<li><p><strong>precision_land_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrecisionLandMode</span></code></span>) – Flag for using precision land mode. Defaults to PrecisionLandMode.DISABLED.</p></li>
+<li><p><strong>critical</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag for triggering failsafe on error. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 for success, o.w. error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.land_here">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">land_here</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abort_altitude_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision_land_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PrecisionLandMode.DISABLED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.land_here" title="Link to this definition">¶</a></dt>
+<dd><p>Land at current position</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>abort_altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Minimum altitude to trigger abort</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum time to wait for successful landing</p></li>
+<li><p><strong>precision_land_mode</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrecisionLandMode</span></code></span>) – Flag for using precision land mode. Defaults to PrecisionLandMode.DISABLED.</p></li>
+<li><p><strong>critical</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag for triggering failsafe on error. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 for success, o.w. error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.set_geofence">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set_geofence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geofence_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.set_geofence" title="Link to this definition">¶</a></dt>
+<dd><p>Send and enable the geofence from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>geofence_filename</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Path</span></code></span>) – The file containing the geofence mission.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the geofence was set successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.takeoff">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">takeoff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pitch_deg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_horizontal_position</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">critical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.takeoff" title="Link to this definition">¶</a></dt>
+<dd><p>Set mode to guided, arm, and takeoff at current position and wait for altitude reached</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Altitude to ascend to</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum wait time to reach altitude</p></li>
+<li><p><strong>tolerance_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Tolerance for altitude acceptance in meters. Defaults to 2.</p></li>
+<li><p><strong>pitch_deg</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Pitch to ascend at (planes only). Minimum pitch if airspeed sensor present, else desired pitch.</p></li>
+<li><p><strong>require_horizontal_position</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></span>) – Require autopilot to have control over its horizontal position. Defaults to True.</p></li>
+<li><p><strong>critical</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag for triggering failsafe on error. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 on success else error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_altitude_reached">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_altitude_reached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_altitude_reached" title="Link to this definition">¶</a></dt>
+<dd><p>Wait until a specified altitude is reached</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>altitude_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Altitude to wait for in meters</p></li>
+<li><p><strong>tolerance_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Tolerance for accepting altitude in meters</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum time to wait</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 on reaching altitude else error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_channel_input">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_channel_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_channel_input" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for a specified rc channel to reach a given value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>channel</strong> (<em>int</em>) – The channel number to wait for.</p></li>
+<li><p><strong>value</strong> (<em>int</em>) – The value to wait for.</p></li>
+<li><p><strong>wait_time</strong> (<em>int</em>) – The maximum time to wait for the channel to be set in seconds.</p></li>
+<li><p><strong>value_tolerance</strong> (<em>int</em>) – The tolerance range for the set value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the channel was set to the desired value, otherwise an error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_disarm">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_disarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_disarm" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_landing">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_landing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_landing" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for ardupilot to signal landed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – The maximum time to wait for the landing status in seconds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the landing was successful, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_position_reached">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_position_reached</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout_s</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_position_reached" title="Link to this definition">¶</a></dt>
+<dd><p>Wait until a specified position is reached</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="coordinate.html#MAVez.coordinate.Coordinate" title="MAVez.coordinate.Coordinate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coordinate</span></code></a></span>) – Position to wait for</p></li>
+<li><p><strong>tolerance_m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Tolerance for accepting position in meters</p></li>
+<li><p><strong>timeout_s</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Maximum time to wait</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 on reaching position else error code</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MAVez.flight_controller.FlightController.wait_for_waypoint">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">wait_for_waypoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MAVez.flight_controller.FlightController.wait_for_waypoint" title="Link to this definition">¶</a></dt>
+<dd><p>Wait for ardupilot to reach the current waypoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>target</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – The target waypoint index to wait for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>0 if the waypoint was reached successfully, otherwise an error code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -301,8 +1407,85 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Controllers</a><ul>
-<li><a class="reference internal" href="#basic-controller">Basic Controller</a></li>
-<li><a class="reference internal" href="#flight-controller">Flight Controller</a></li>
+<li><a class="reference internal" href="#module-MAVez.controller">Basic Controller</a><ul>
+<li><a class="reference internal" href="#MAVez.controller.Controller"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.controller.Controller.BAD_RESPONSE_ERROR"><code class="docutils literal notranslate"><span class="pre">Controller.BAD_RESPONSE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.TIMEOUT_DURATION"><code class="docutils literal notranslate"><span class="pre">Controller.TIMEOUT_DURATION</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.TIMEOUT_ERROR"><code class="docutils literal notranslate"><span class="pre">Controller.TIMEOUT_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.UNKNOWN_MODE"><code class="docutils literal notranslate"><span class="pre">Controller.UNKNOWN_MODE</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.arm"><code class="docutils literal notranslate"><span class="pre">Controller.arm()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.clock_synchronizer"><code class="docutils literal notranslate"><span class="pre">Controller.clock_synchronizer()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.decode_error"><code class="docutils literal notranslate"><span class="pre">Controller.decode_error()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disable_geofence"><code class="docutils literal notranslate"><span class="pre">Controller.disable_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disable_message_interval"><code class="docutils literal notranslate"><span class="pre">Controller.disable_message_interval()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.disarm"><code class="docutils literal notranslate"><span class="pre">Controller.disarm()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.enable_geofence"><code class="docutils literal notranslate"><span class="pre">Controller.enable_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.get_message_seq"><code class="docutils literal notranslate"><span class="pre">Controller.get_message_seq()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.message_pump"><code class="docutils literal notranslate"><span class="pre">Controller.message_pump()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.monotonic_time_ns"><code class="docutils literal notranslate"><span class="pre">Controller.monotonic_time_ns()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.override_rc"><code class="docutils literal notranslate"><span class="pre">Controller.override_rc()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_attitude"><code class="docutils literal notranslate"><span class="pre">Controller.receive_attitude()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_channel_input"><code class="docutils literal notranslate"><span class="pre">Controller.receive_channel_input()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_current_mission_index"><code class="docutils literal notranslate"><span class="pre">Controller.receive_current_mission_index()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_gps"><code class="docutils literal notranslate"><span class="pre">Controller.receive_gps()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_landing_status"><code class="docutils literal notranslate"><span class="pre">Controller.receive_landing_status()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_message"><code class="docutils literal notranslate"><span class="pre">Controller.receive_message()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_ack"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_ack()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_item_reached"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_item_reached()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_mission_request"><code class="docutils literal notranslate"><span class="pre">Controller.receive_mission_request()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_timesync"><code class="docutils literal notranslate"><span class="pre">Controller.receive_timesync()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.receive_wind"><code class="docutils literal notranslate"><span class="pre">Controller.receive_wind()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.release_rc"><code class="docutils literal notranslate"><span class="pre">Controller.release_rc()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.request_message"><code class="docutils literal notranslate"><span class="pre">Controller.request_message()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.request_timesync"><code class="docutils literal notranslate"><span class="pre">Controller.request_timesync()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.run_prearm_checks"><code class="docutils literal notranslate"><span class="pre">Controller.run_prearm_checks()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_clear_mission"><code class="docutils literal notranslate"><span class="pre">Controller.send_clear_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_command_with_ack"><code class="docutils literal notranslate"><span class="pre">Controller.send_command_with_ack()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_message"><code class="docutils literal notranslate"><span class="pre">Controller.send_message()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_mission_count"><code class="docutils literal notranslate"><span class="pre">Controller.send_mission_count()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_reposition"><code class="docutils literal notranslate"><span class="pre">Controller.send_reposition()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.send_takeoff"><code class="docutils literal notranslate"><span class="pre">Controller.send_takeoff()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_current_mission_index"><code class="docutils literal notranslate"><span class="pre">Controller.set_current_mission_index()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_home"><code class="docutils literal notranslate"><span class="pre">Controller.set_home()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_message_interval"><code class="docutils literal notranslate"><span class="pre">Controller.set_message_interval()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_mode"><code class="docutils literal notranslate"><span class="pre">Controller.set_mode()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.set_servo"><code class="docutils literal notranslate"><span class="pre">Controller.set_servo()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.start"><code class="docutils literal notranslate"><span class="pre">Controller.start()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.start_mission"><code class="docutils literal notranslate"><span class="pre">Controller.start_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.stop"><code class="docutils literal notranslate"><span class="pre">Controller.stop()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.sync_clocks"><code class="docutils literal notranslate"><span class="pre">Controller.sync_clocks()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.controller.Controller.time_boot_ms"><code class="docutils literal notranslate"><span class="pre">Controller.time_boot_ms()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-MAVez.flight_controller">Flight Controller</a><ul>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController"><code class="docutils literal notranslate"><span class="pre">FlightController</span></code></a><ul>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.BAD_RESPONSE_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.BAD_RESPONSE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.INVALID_MISSION_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.INVALID_MISSION_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.TIMEOUT_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.TIMEOUT_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.UNKNOWN_MODE_ERROR"><code class="docutils literal notranslate"><span class="pre">FlightController.UNKNOWN_MODE_ERROR</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.append_mission"><code class="docutils literal notranslate"><span class="pre">FlightController.append_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.auto_mission_takeoff"><code class="docutils literal notranslate"><span class="pre">FlightController.auto_mission_takeoff()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.auto_send_next_mission"><code class="docutils literal notranslate"><span class="pre">FlightController.auto_send_next_mission()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.decode_error"><code class="docutils literal notranslate"><span class="pre">FlightController.decode_error()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.go_to"><code class="docutils literal notranslate"><span class="pre">FlightController.go_to()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.is_armed"><code class="docutils literal notranslate"><span class="pre">FlightController.is_armed()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.jump_to_next_mission_item"><code class="docutils literal notranslate"><span class="pre">FlightController.jump_to_next_mission_item()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.land"><code class="docutils literal notranslate"><span class="pre">FlightController.land()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.land_here"><code class="docutils literal notranslate"><span class="pre">FlightController.land_here()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.set_geofence"><code class="docutils literal notranslate"><span class="pre">FlightController.set_geofence()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.takeoff"><code class="docutils literal notranslate"><span class="pre">FlightController.takeoff()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_altitude_reached"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_altitude_reached()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_channel_input"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_channel_input()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_disarm"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_disarm()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_landing"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_landing()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_position_reached"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_position_reached()</span></code></a></li>
+<li><a class="reference internal" href="#MAVez.flight_controller.FlightController.wait_for_waypoint"><code class="docutils literal notranslate"><span class="pre">FlightController.wait_for_waypoint()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
