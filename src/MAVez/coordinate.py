@@ -1,8 +1,8 @@
 # coordinate.py
-# version: 1.3.0
+# version: 2.0.0
 # Authors: Theodore Tasman
 # Creation Date: 2025-01-30
-# Last Modified: 2026-03-26
+# Last Modified: 2026-04-16
 # Organization: PSU UAS
 
 """
@@ -10,199 +10,275 @@ Represents a geographic coordinate with latitude, longitude, and altitude.
 """
 
 import math
-from typing import Tuple, Union
-
-EARTH_RADIUS = 6378137  # in meters
-METERS_PER_DEGREE = EARTH_RADIUS / 180 * math.pi
-
-
+from geographiclib.geodesic import Geodesic
 class Coordinate:
-    """
-    This class represents a coordinate in latitude, longitude, and altitude. It provides methods to initialize the coordinate, convert between degrees and decimal degrees, and offset the coordinate by a given distance and heading.
+    def __init__(
+            self, 
+            latitude_deg: float, 
+            longitude_deg: float, 
+            altitude_m: float = 0, 
+            heading_deg: float = 0, 
+            timestamp_ms: int | float = 0
+    ):
+        """Coordinate object represents a geographic coordinate as a specific WGS84 global position, with both integer and float representations
 
-    Args:
-        lat (float | str): Latitude in decimal degrees or DMS format if `dms` is True.
-        lon (float | str): Longitude in decimal degrees or DMS format if `dms` is True.
-        alt (float): Altitude in meters.
-        dms (bool): If True, the coordinates are in degrees, minutes, seconds format. Defaults to False.
-        use_int (bool): If True, the coordinates are stored as integers. Defaults to True.
-        heading (float | None): Heading in degrees. Defaults to None.
-        timestamp (int): Timestamp associated with the coordinate. Defaults to 0.
+        Args:
+            latitude_deg (float): Latitude of position in degrees.
+            longitude_deg (float): Longitude of position in degrees.
+            altitude_m (float, optional): Altitude of position in meters. Defaults to 0.
+            heading_deg (float, optional): Heading of position in degrees clockwise from North. Defaults to 0.
+            timestamp_ms (int, optional): Timestamp for position in milliseconds. Defaults to 0.
+        """
+        # float representations
+        self.latitude_deg = latitude_deg
+        self.longitude_deg = longitude_deg
+        self.altitude_m = altitude_m
+        self.heading_deg = heading_deg
 
-    Returns:
-        Coordinate: An instance of the Coordinate class.
-    """
+        self.timestamp_ms = timestamp_ms
 
-    def __init__(self, lat: float | int, lon: float | int, alt: float | int, use_int: bool = True, heading: float | None = None, timestamp: int = 0):
-        
-        self.lat = lat
-        self.lon = lon
+    @classmethod
+    def from_int(
+        cls, 
+        latitude_degE7: int, 
+        longitude_degE7: int,
+        altitude_mm: int = 0,
+        heading_cdeg: int = 0,
+        timestamp_ms: int | float = 0
+    ):
+        """Create a coordinate object from using integer representation of position
 
-        # alt is always used as it is
-        self.alt = alt
+        Args:
+            latitude_degE7 (int): Latitude of position in degrees * 10^7.
+            longitude_degE7 (int): Longitude of position in degrees * 10^7.
+            altitude_mm (int, optional): Altitude of position in millimeters. Defaults to 0.
+            heading_cdeg (int, optional): Heading of position in centidegrees clockwise from north. Defaults to 0.
+            timestamp_ms (int | float, optional): Timestamp for the position in milliseconds. Defaults to 0.
 
-        # if integer is True, convert the coordinates to integers
-        if use_int and abs(self.lat) < 90 and abs(self.lon) < 180:
-            self.lat = int(self.lat * 1e7)
-            self.lon = int(self.lon * 1e7)
-        
-        elif use_int is False and (abs(self.lat) > 90 or abs(self.lon) > 180):
-            self.lat = self.lat / 1e7
-            self.lon = self.lon / 1e7
+        Returns:
+            Coordinate: The created Coordinate object
+        """
+        return Coordinate(
+            latitude_deg=latitude_degE7 / 1e7,
+            longitude_deg=longitude_degE7 / 1e7,
+            altitude_m=altitude_mm / 1000,
+            heading_deg=heading_cdeg / 100,
+            timestamp_ms=timestamp_ms
+        )
+    
+    @classmethod
+    def from_rad(
+        cls,
+        latitude_rad: float,
+        longitude_rad: float,
+        altitude_m: float = 0,
+        heading_rad: float = 0,
+        timestamp_ms: int | float = 0
+    ):
+        """Create a coordinate object from using radian representation of position
 
-        self.is_int = use_int
+        Args:
+            latitude_rad (float): Latitude of position in radians.
+            longitude_rad (float): Longitude of position in radians.
+            altitude_m (float, optional): Altitude of position in meters. Defaults to 0.
+            heading_rad (float, optional): Heading of position in radians clockwise from north. Defaults to 0.
+            timestamp_ms (int | float, optional): Timestamp for the position in milliseconds. Defaults to 0.
 
-        self.heading = heading
-        self.timestamp = timestamp
+        Returns:
+            Coordinate: The created Coordinate object
+        """
+        return Coordinate(
+            latitude_deg=math.degrees(latitude_rad),
+            longitude_deg=math.degrees(longitude_rad),
+            altitude_m=altitude_m,
+            heading_deg=math.degrees(heading_rad),
+            timestamp_ms=timestamp_ms
+        )
 
     def __str__(self):
-        out = f"{self.lat}, {self.lon}, {self.alt}"
-        if self.heading is not None:
-            out += f", heading: {self.heading}"
-        if self.timestamp is not None:
-            out += f", timestamp: {self.timestamp}"
+        out = f"{self.latitude_deg}°, {self.longitude_deg}°; {self.altitude_m}m"
 
         return out
 
     __repr__ = __str__
 
-    def offset_coordinate(self, offset: float | int, bearing: float | int) -> "Coordinate":
+    @property
+    def latitude_degE7(self) -> int:
+        return int(self.latitude_deg * 1e7)
+    
+    @property
+    def longitude_degE7(self) -> int:
+        return int(self.longitude_deg * 1e7)
+    
+    @property
+    def altitude_mm(self) -> int:
+        return int(self.altitude_m * 1000)
+    
+    @property
+    def heading_cdeg(self) -> int:
+        return int(self.heading_deg * 100)
+    
+    @property
+    def latitude_rad(self) -> float:
+        return math.radians(self.latitude_deg)
+
+    @property
+    def longitude_rad(self) -> float:
+        return math.radians(self.longitude_deg)
+    
+    @property
+    def heading_rad(self) -> float:
+        return math.radians(self.heading_deg)
+
+    def offset_coordinate(self, distance_m: float, azimuth_deg: float) -> "Coordinate":
         """
         Offset the coordinate by a given distance and heading.
 
         Args:
-            offset (float): The distance to offset in meters.
-            bearing (float): The bearing in degrees.
+            distance_m (float): The distance to offset in meters.
+            azimuth_deg (float): The bearing from the first coordinate in degrees.
 
         Returns:
             Coordinate: A new Coordinate object with the offset applied.
         """
 
-        lat, lon = self.normalize()
-
-        # convert heading to radians
-        bearing = math.radians(bearing)
-
-        # calculate the offset in latitude and longitude
-        lat_offset = offset * math.cos(bearing)
-        lon_offset = offset * math.sin(bearing)
-
-        # convert the offset to degrees
-        lat_offset = lat_offset / METERS_PER_DEGREE
-        lon_offset = lon_offset / (METERS_PER_DEGREE * math.cos(math.radians(lat)))
-
-        # calculate the new latitude and longitude
-        new_lat = lat + lat_offset
-        new_lon = lon + lon_offset
-
-        return Coordinate(new_lat, new_lon, self.alt, use_int=self.is_int)
-
-    def __eq__(self, other: Union["Coordinate", Tuple[float, float, float]]) -> bool:  # type: ignore[override]
-        if isinstance(other, tuple) and len(other) == 3:
-            other = Coordinate(*other)
-
-        return (
-            self.lat == other.lat
-            and self.lon == other.lon
-            and self.alt == other.alt
+        # use geodesic model to offset coordinates
+        geo = Geodesic.WGS84.Direct(
+            lat1=self.latitude_deg,
+            lon1=self.longitude_deg,
+            azi1=azimuth_deg,
+            s12=distance_m,
+            outmask=Geodesic.LATITUDE | Geodesic.LONGITUDE # only compute lat/lon
         )
 
-    def normalize(self) -> Tuple[float, float]:
-        """
-        Normalize the coordinates to decimal degrees.
+        return Coordinate(
+            latitude_deg=geo["lat2"],
+            longitude_deg=geo["lon2"],
+            altitude_m=self.altitude_m,
+            heading_deg=self.heading_deg,
+            timestamp_ms=self.timestamp_ms
+        )
 
-        Returns:
-            tuple: A tuple containing the latitude and longitude in decimal degrees.
-        """
-        # ensure both self and other are in decimal degrees
-        if self.is_int:
-            self_lat = self.lat / 1e7
-            self_lon = self.lon / 1e7
-        else:
-            self_lat = self.lat
-            self_lon = self.lon
+    def __eq__(self, other: "Coordinate | object") -> bool:
+        if not isinstance(other, Coordinate):
+            return False
 
-        return self_lat, self_lon
+        return (
+            self.latitude_deg == other.latitude_deg
+            and self.longitude_deg == other.longitude_deg
+            and self.altitude_m == other.altitude_m
+            and self.heading_deg == other.heading_deg
+        )
 
-    def distance_to(self, other: "Coordinate") -> float:
-        """
-        Calculate the distance between two coordinates in meters using the haversine formula.
+    def distance_to(self, other: "Coordinate", include_alt: bool = False) -> float:
+        """Calculate the distance between two coordinates in meters.
 
         Args:
             other (Coordinate): The other coordinate to calculate the distance to.
+            include_alt (bool, optional): Flag to consider difference in altitude in distance. Defaults to false.
 
         Returns:
-            float: The distance in meters between the two coordinates.
+            float: The distance in meters between the two coordinates. 
         """
 
-        self_lat, self_lon = self.normalize()
-        other_lat, other_lon = other.normalize()
-
-        dlat = math.radians(other_lat - self_lat)
-        dlon = math.radians(other_lon - self_lon)
-
-        a = (
-            math.sin(dlat / 2) ** 2
-            + math.cos(math.radians(self_lat))
-            * math.cos(math.radians(other_lat))
-            * math.sin(dlon / 2) ** 2
+        geo = Geodesic.WGS84.Inverse(
+            lat1=self.latitude_deg,
+            lat2=other.latitude_deg,
+            lon1=self.longitude_deg,
+            lon2=other.longitude_deg,
+            outmask=Geodesic.DISTANCE # only compute distance
         )
-        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        if include_alt:
+            alt_diff = self.altitude_m - other.altitude_m
+            return math.sqrt(geo["s12"] ** 2 + alt_diff ** 2)
+        else:
+            return geo["s12"]
 
-        distance = EARTH_RADIUS * c
 
-        return distance
+    def azimuth_to(self, other: "Coordinate") -> float:
+        """Compute the azimuth to another coordinate clockwise from north
+
+        Args:
+            other (Coordinate): The other coordinate to calculate the azimuth to.
+
+        Returns:
+            float: The azimuth relative to north in degrees
+        """
+        geo = Geodesic.WGS84.Inverse(
+            lat1=self.latitude_deg,
+            lat2=other.latitude_deg,
+            lon1=self.longitude_deg,
+            lon2=other.longitude_deg,
+            outmask=Geodesic.AZIMUTH # only compute azimuths
+        )
+
+        return geo["azi1"]
+    
 
     def bearing_to(self, other: "Coordinate") -> float:
-        """
-        Calculate the bearing between two coordinates in degrees.
+        """Compute the bearing to another coordinate clockwise from `self.heading_deg`
 
         Args:
             other (Coordinate): The other coordinate to calculate the bearing to.
 
         Returns:
-            float: The bearing in degrees from self to other.
+            float: The bearing relative to heading in degrees
         """
+        return self.azimuth_to(other) - self.heading_deg
+    
 
-        self_lat, self_lon = self.normalize()
-        other_lat, other_lon = other.normalize()
+    def path_to(self, other: "Coordinate") -> dict[str, float]:
+        """
+        Calculate the azimuth, bearing, and distance between two coordinates in degrees.
 
-        dlon = math.radians(other_lon - self_lon)
-        self_lat = math.radians(self_lat)
-        other_lat = math.radians(other_lat)
+        Args:
+            other (Coordinate): The other coordinate to calculate the path to.
 
-        x = math.sin(dlon) * math.cos(other_lat)
-        y = math.cos(self_lat) * math.sin(other_lat) - math.sin(self_lat) * math.cos(
-            other_lat
-        ) * math.cos(dlon)
-        initial_bearing = math.atan2(x, y)
-        initial_bearing = math.degrees(initial_bearing)
-        compass_bearing = (initial_bearing + 360) % 360
-        return compass_bearing
+        Returns:
+            tuple[float, float]: A dict with keys for calculated "distance" in meters, "azimuth" in degrees, and "bearing" in degrees
+        """
+        geo = Geodesic.WGS84.Inverse(
+            lat1=self.latitude_deg,
+            lat2=other.latitude_deg,
+            lon1=self.longitude_deg,
+            lon2=other.longitude_deg,
+            outmask=Geodesic.AZIMUTH | Geodesic.DISTANCE # compute azimuths and distance
+        )
+
+        return {
+            "distance": geo["s12"],
+            "azimuth": geo["azi1"],
+            "bearing": geo["azi1"] - self.heading_deg
+        }
+
 
 
 def main():
-    coord1 = Coordinate(-35.3632623, 149.1652377, 784.09)
-    coord2 = Coordinate(-353624199, 1491655403, 500)
+    coord1 = Coordinate(-35.3632623, 149.1652377, 784.09, 20)
+    coord2 = Coordinate.from_int(-353_624_199, 1_491_655_403, 50000)
 
     print(f"Coordinate 1: {coord1}")
     print(f"Coordinate 2: {coord2}")
 
     distance = coord1.distance_to(coord2)
-    bearing = coord1.bearing_to(coord2)
+    bearing = coord1.azimuth_to(coord2)
 
     print(f"Distance between coordinates: {distance:.2f} meters")
-    print(f"Bearing from coord1 to coord2: {bearing:.2f} degrees")
+    print(f"Azimuth from coord1 to coord2: {bearing:.2f} degrees")
 
     offset_coord = coord1.offset_coordinate(1000, 45)
     print(f"Offset Coordinate (1000m at 45°): {offset_coord}")
 
     distance = coord1.distance_to(offset_coord)
+    azimuth = coord1.azimuth_to(offset_coord)
     bearing = coord1.bearing_to(offset_coord)
+    path = coord1.path_to(offset_coord)
+
 
     print(f"Distance to Offset Coordinate: {distance:.2f} meters")
-    print(f"Bearing to Offset Coordinate: {bearing:.2f} degrees")
-
+    print(f"Azimuth to Offset Coordinate: {azimuth:.2f} degrees")
+    print(f"Bearing to Offset coordinate: {bearing:.2f} degrees")
+    print(path)
 
 if __name__ == "__main__":
     main()

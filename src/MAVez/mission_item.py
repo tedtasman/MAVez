@@ -54,9 +54,9 @@ class MissionItem:
         self.command = int(command)
         self.current = int(current)
         self.auto_continue = int(auto_continue)
-        self.x = coordinate.lat
-        self.y = coordinate.lon
-        self.z = coordinate.alt
+        self.x = coordinate.latitude_degE7
+        self.y = coordinate.longitude_degE7
+        self.z = coordinate.altitude_m # mavlink says z should be in mm but ardupilot uses m
         self.param1 = float(param1)
         self.param2 = float(param2)
         self.param3 = float(param3)
